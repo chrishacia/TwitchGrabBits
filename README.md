@@ -1,5 +1,7 @@
 # TwitchGrabBits
 
+[![CI](https://github.com/chrishacia/TwitchGrabBits/actions/workflows/ci.yml/badge.svg)](https://github.com/chrishacia/TwitchGrabBits/actions/workflows/ci.yml)
+
 A sleek Chrome extension that automatically claims Twitch channel bonus rewards and tracks per-streamer claim counts locally using IndexedDB.
 
 ## Screenshot
