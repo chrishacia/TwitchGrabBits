@@ -1,0 +1,38 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="64" y1="64" x2="448" y2="448" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B984FF"/>
+      <stop offset="1" stop-color="#6C1FE0"/>
+    </linearGradient>
+    <linearGradient id="gemA" x1="256" y1="150" x2="340" y2="280" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E2CAFF"/>
+      <stop offset="1" stop-color="#9F5BFF"/>
+    </linearGradient>
+    <linearGradient id="gemB" x1="170" y1="278" x2="255" y2="365" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C18EFF"/>
+      <stop offset="1" stop-color="#7D2FEB"/>
+    </linearGradient>
+    <linearGradient id="gemC" x1="256" y1="278" x2="348" y2="365" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8B3BF2"/>
+      <stop offset="1" stop-color="#4A109F"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="28" y="28" width="456" height="456" rx="120" fill="url(#bg)"/>
+  <rect x="112" y="112" width="288" height="288" rx="72" fill="#F5F2FA"/>
+
+  <path d="M256 150L326 248H186L256 150Z" fill="url(#gemA)"/>
+  <path d="M256 150V248L186 248L256 150Z" fill="#CBA5FF"/>
+  <path d="M256 150L326 248H256V150Z" fill="#8D43F2"/>
+  <path d="M186 248H256V362L186 248Z" fill="url(#gemB)"/>
+  <path d="M256 248H326L256 362V248Z" fill="url(#gemC)"/>
+  <path d="M256 248V362L186 248H256Z" fill="#8F4AF6"/>
+  <path d="M256 248H326L256 362V248Z" fill="#5C16C5"/>
+
+  <circle cx="170" cy="170" r="12" fill="#9147FF"/>
+  <rect x="196" y="156" width="86" height="20" rx="10" fill="#9147FF"/>
+  <rect x="196" y="194" width="66" height="20" rx="10" fill="#9147FF"/>
+
+  <path d="M353 323L401 366" stroke="#9147FF" stroke-width="22" stroke-linecap="round"/>
+  <rect x="381" y="340" width="32" height="74" rx="16" transform="rotate(45 381 340)" fill="#9147FF"/>
+</svg>
