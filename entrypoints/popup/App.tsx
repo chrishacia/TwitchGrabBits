@@ -22,7 +22,7 @@ import type {
 } from '@/src/messaging/messages';
 import type { PopupState, StreamerStats } from '@/src/types/models';
 
-import fullLogo from '@/assets/logo/logo-full.svg';
+import fullLogo from '@/assets/logo/logo-full.png';
 
 type TabKey = 'activity' | 'about';
 
@@ -55,7 +55,9 @@ function App() {
   const [popupState, setPopupState] = useState<PopupState>(DEFAULT_POPUP_STATE);
   const [error, setError] = useState<string | null>(null);
 
-  const version = browser.runtime.getManifest().version;
+  const manifest = browser.runtime.getManifest();
+  const version = manifest.version;
+  const buildVersion = manifest.version_name ?? 'local-dev';
 
   const readStats = async () => {
     const response = (await browser.runtime.sendMessage({
@@ -255,7 +257,7 @@ function App() {
           onExport={onExport}
         />
       ) : (
-        <AboutTab version={version} />
+        <AboutTab version={version} buildVersion={buildVersion} />
       )}
     </Box>
   );

@@ -1,4 +1,11 @@
 import { defineConfig } from 'wxt';
+import { readFileSync } from 'node:fs';
+
+const pkg = JSON.parse(
+  readFileSync(new URL('./package.json', import.meta.url), 'utf-8'),
+) as { version: string };
+
+const buildVersion = process.env.BUILD_VERSION ?? 'local-dev';
 
 // See https://wxt.dev/api/config.html
 export default defineConfig({
@@ -7,7 +14,8 @@ export default defineConfig({
     name: 'TwitchGrabBits',
     description:
       'A sleek Chrome extension that automatically claims Twitch channel bonus rewards and tracks per-streamer claim counts locally using IndexedDB.',
-    version: '1.0.0',
+    version: pkg.version,
+    version_name: buildVersion,
     permissions: ['storage'],
     host_permissions: ['https://www.twitch.tv/*'],
     icons: {

@@ -2,13 +2,14 @@ import { Box, Divider, Link, Stack, Typography } from '@mui/material';
 
 import { GITHUB_URL, PERSONAL_WEBSITE_URL } from '@/src/config/links';
 
-import fullLogo from '@/assets/logo/logo-full.svg';
+import fullLogo from '@/assets/logo/logo-full.png';
 
 interface Props {
   version: string;
+  buildVersion: string;
 }
 
-export function AboutTab({ version }: Props) {
+export function AboutTab({ version, buildVersion }: Props) {
   return (
     <Stack spacing={2} sx={{ mt: 2 }}>
       <Box
@@ -22,6 +23,9 @@ export function AboutTab({ version }: Props) {
         <Typography variant="h6">TwitchGrabBits</Typography>
         <Typography variant="body2" color="text.secondary">
           Version {version}
+        </Typography>
+        <Typography variant="caption" color="text.secondary">
+          Build {buildVersion}
         </Typography>
       </Box>
 

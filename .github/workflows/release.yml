@@ -1,0 +1,59 @@
+name: Release
+
+on:
+  push:
+    branches: ['main']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Release Please
+        id: release
+        uses: googleapis/release-please-action@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          config-file: .release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+      - name: Setup pnpm
+        if: ${{ steps.release.outputs.release_created == 'true' }}
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11
+
+      - name: Setup Node
+        if: ${{ steps.release.outputs.release_created == 'true' }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        if: ${{ steps.release.outputs.release_created == 'true' }}
+        run: pnpm install --frozen-lockfile
+
+      - name: Build release artifact
+        if: ${{ steps.release.outputs.release_created == 'true' }}
+        env:
+          BUILD_VERSION: release.${{ steps.release.outputs.tag_name }}
+        run: |
+          pnpm build
+          cd .output/chrome-mv3
+          zip -r ../TwitchGrabBits-${{ steps.release.outputs.tag_name }}-chrome-mv3.zip .
+
+      - name: Upload extension artifact to release
+        if: ${{ steps.release.outputs.release_created == 'true' }}
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.release.outputs.tag_name }}
+          files: .output/TwitchGrabBits-${{ steps.release.outputs.tag_name }}-chrome-mv3.zip
