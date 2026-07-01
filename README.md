@@ -4,7 +4,7 @@ A sleek Chrome extension that automatically claims Twitch channel bonus rewards 
 
 ## Screenshot
 
-Add popup screenshot here: `docs/screenshot-popup.png`
+![TwitchGrabBits Logo](assets/logo/logo-full.png)
 
 ## Features
 
