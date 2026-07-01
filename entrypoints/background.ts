@@ -72,13 +72,18 @@ export default defineBackground(() => {
   void claimRepository.getOrCreateSettings();
   void getTrackingEnabled();
 
-  browser.runtime.onMessage.addListener((message: unknown, sender, sendResponse) => {
+  browser.runtime.onMessage.addListener((message: unknown, sender) => {
     if (!isExtensionMessage(message)) {
-      sendResponse({ ok: false, error: 'Invalid message payload' } satisfies ExtensionResponse);
-      return;
+      return Promise.resolve({
+        ok: false,
+        error: 'Invalid message payload',
+      } satisfies ExtensionResponse);
     }
 
-    const run = async (request: ExtensionMessage): Promise<ExtensionResponse> => {
+    const run = async (
+      request: ExtensionMessage,
+      runtimeSender: chrome.runtime.MessageSender,
+    ): Promise<ExtensionResponse> => {
       switch (request.type) {
         case 'GET_TRACKING_STATE': {
           const enabled = await getTrackingEnabled();
@@ -135,8 +140,8 @@ export default defineBackground(() => {
           return { ok: true };
         }
         case 'CONTENT_STATUS_UPDATE': {
-          if (sender.tab?.id !== undefined) {
-            streamerByTab.set(sender.tab.id, request.payload.currentStreamer);
+          if (runtimeSender.tab?.id !== undefined) {
+            streamerByTab.set(runtimeSender.tab.id, request.payload.currentStreamer);
           }
 
           lastKnownStreamer = request.payload.currentStreamer;
@@ -151,7 +156,7 @@ export default defineBackground(() => {
           return { ok: true, stats, totalClaims };
         }
         case 'GET_CURRENT_STREAMER': {
-          const tabId = sender.tab?.id;
+          const tabId = runtimeSender.tab?.id;
           const streamer = tabId === undefined ? lastKnownStreamer : streamerByTab.get(tabId) ?? null;
           return { ok: true, streamer };
         }
@@ -179,16 +184,13 @@ export default defineBackground(() => {
       }
     };
 
-    void run(message)
-      .then((response) => sendResponse(response))
+    return run(message, sender)
       .catch((error: unknown) => {
         logger.error('Message processing failed', error);
-        sendResponse({
+        return {
           ok: false,
           error: error instanceof Error ? error.message : 'Unknown background error',
-        } satisfies ExtensionResponse);
+        } satisfies ExtensionResponse;
       });
-
-    return true;
   });
 });
