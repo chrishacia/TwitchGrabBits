@@ -4,6 +4,10 @@
 
 A sleek Chrome extension that automatically claims Twitch channel bonus rewards and tracks per-streamer claim counts locally using IndexedDB.
 
+Website: [chrishacia.com](https://chrishacia.com)
+
+Discord: [Join the Community](https://discord.gg/8gG5vpN3YP)
+
 ## Screenshot
 
 ![TwitchGrabBits Logo](assets/logo/logo-full.png)
